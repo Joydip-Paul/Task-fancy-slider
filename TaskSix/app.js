@@ -31,17 +31,39 @@ const showImages = images => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
+    toggleSpinner(false);
   });
 
 }
 
+//error
+const displayError = error => {
+  const errorTag = document.getElementById('error');
+  errorTag.innerText = error;
+  console.log(errorTag)
+}
+
+//Loading
+const toggleSpinner = (show) => {
+  const spinner = document.getElementById('loading');
+  // console.log(spinner.classList);
+  if(show){
+    spinner.style.display = 'block';
+  }
+  else{
+    spinner.style.display = 'none';
+  }
+  
+}
 const getImages = (query) => {
+  toggleSpinner(true);
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     // .then(data => showImages(data.image))
-    .then(data => console.log((data)))
-    .catch(err => console.log(err))
+    // .then(data => console.log((data)))
+    // .catch(err => console.log(err))
+    .catch(error => displayError ('Please Enter Valid Name'));
 }
 
 let slideIndex = 0;
@@ -132,10 +154,22 @@ searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
   const search = document.getElementById('search');
+  if(search.value == ''){
+    // alert("ddd");
+    const errorTag = document.getElementById('error');
+  errorTag.innerText = "Input Field Can't Be Empty";
+    return false;
+  }
+  else{
+    sliders.length = 0;
+  }
   getImages(search.value)
-  sliders.length = 0;
+  
+  
 })
 
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+

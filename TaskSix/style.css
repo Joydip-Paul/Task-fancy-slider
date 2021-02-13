@@ -64,3 +64,12 @@ img {
     width: 90%;
   }
 }
+
+#error{
+  text-align: center;
+  color: #ff0033;
+  font-size: 20px;
+}
+.loading{
+  display: none;
+}
