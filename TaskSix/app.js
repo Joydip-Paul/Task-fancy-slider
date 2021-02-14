@@ -63,7 +63,7 @@ const getImages = (query) => {
     // .then(data => showImages(data.image))
     // .then(data => console.log((data)))
     // .catch(err => console.log(err))
-    .catch(error => displayError ('Please Enter Valid Name'));
+    .catch(error => displayError ('Something Went Wrong! Please Try Again Later'));
 }
 
 let slideIndex = 0;
@@ -75,7 +75,9 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    // alert('Hey, Already added !')
+   sliders.pop(img);    
+   element.classList.remove('added'); 
   }
 }
 var timer
@@ -112,9 +114,13 @@ const createSlider = () => {
   //   slideIndex++;
   //   changeSlide(slideIndex);
   // }, duration);
+
   if(duration<1000){
-    alert("Enter at-least 1000 ms");
-    return false;
+    const errorTag = document.getElementById('error');
+    errorTag.innerText = "Enter at least 1000 ms";
+    // return false;
+    const sliderContainer = document.getElementById('sliders');
+    sliderContainer.style.display = 'none';
   }
   else{
       timer = setInterval(function () {
@@ -157,7 +163,7 @@ searchBtn.addEventListener('click', function () {
   if(search.value == ''){
     // alert("ddd");
     const errorTag = document.getElementById('error');
-  errorTag.innerText = "Input Field Can't Be Empty";
+    errorTag.innerText = "Input Field Can't Be Empty";
     return false;
   }
   else{
