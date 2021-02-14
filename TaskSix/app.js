@@ -118,15 +118,18 @@ const createSlider = () => {
   if(duration<1000){
     const errorTag = document.getElementById('error');
     errorTag.innerText = "Enter at least 1000 ms";
-    // return false;
     const sliderContainer = document.getElementById('sliders');
     sliderContainer.style.display = 'none';
+    return false;
   }
   else{
+     
       timer = setInterval(function () {
       slideIndex++;
       changeSlide(slideIndex);
     }, duration);
+    const sliderContainer = document.getElementById('sliders');
+     sliderContainer.style.display = 'block';
   }
 }
 
